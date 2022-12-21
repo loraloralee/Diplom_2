@@ -6,7 +6,7 @@ import io.restassured.specification.RequestSpecification;
 public class Client {
     private static final String BASE_URL = "https://stellarburgers.nomoreparties.site";
 
-    protected RequestSpecification getSpec(){
+    protected RequestSpecification getSpec() {
         return new RequestSpecBuilder()
                 .setContentType("application/json")
                 .setBaseUri(BASE_URL)
@@ -14,3 +14,4 @@ public class Client {
 
     }
 }
+

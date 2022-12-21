@@ -12,9 +12,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.apache.http.HttpStatus.*;
 
 public class OrderCreateTest {
-    //private static final String MESSAGE_BAD_REQUEST = "Ingredient ids must be provided";
     private ValidatableResponse response;
     private User user;
     private Order order;
@@ -29,6 +29,7 @@ public class OrderCreateTest {
         orderClient = new OrderClient();
 
     }
+
     public void createListIngredients() {
         response = orderClient.getAllIngredients();
         List<String> list = response.extract().path("data._id");
@@ -37,6 +38,7 @@ public class OrderCreateTest {
         ingredients.add(list.get(1));
         ingredients.add(list.get(0));
     }
+
     public void createListInvalidIngredients() {
         response = orderClient.getAllIngredients();
         List<String> list = response.extract().path("data._id");
@@ -49,7 +51,7 @@ public class OrderCreateTest {
     @Test
     public void orderCreateByAuthorizationWithIngredientsTest() {
         createListIngredients();
-        response = userClient.create(user);
+        response = userClient.createUser(user);
         Credentials credentials = new Credentials(user.getEmail(), user.getPassword());
         response = userClient.login(Credentials.from(user));
         String accessToken = response.extract().path("accessToken");
@@ -60,7 +62,7 @@ public class OrderCreateTest {
         String orderId = response.extract().path("order._id");
         response = userClient.deleteUser(StringUtils.substringAfter(accessToken, " "));
 
-        assertThat("Code not equal", statusCode, equalTo(200));
+        assertThat("Code not equal", statusCode, equalTo(SC_OK));
         assertThat("Order is create incorrect", isCreate, equalTo(true));
         assertThat("Order number is null", orderNumber, notNullValue());
         assertThat("Order id is null", orderId, notNullValue());
@@ -70,7 +72,7 @@ public class OrderCreateTest {
     @Test
     public void orderCreateWithoutAuthorizationWithIngredientsTest() {
         createListIngredients();
-        response = userClient.create(user);
+        response = userClient.createUser(user);
         String accessToken = response.extract().path("accessToken");
         response = orderClient.createOrderWithoutAuthorization(order);
         int statusCode = response.extract().statusCode();
@@ -79,14 +81,15 @@ public class OrderCreateTest {
         String orderId = response.extract().path("order._id");
         response = userClient.deleteUser(StringUtils.substringAfter(accessToken, " "));
 
-        assertThat("Code not equal", statusCode, equalTo(200));
+        assertThat("Code not equal", statusCode, equalTo(SC_OK));
         assertThat("Order is create incorrect", isCreate, equalTo(true));
         assertThat("Order number is null", orderNumber, notNullValue());
         assertThat("Order id is null", orderId, nullValue());
     }
+
     @Test
     public void orderCreateWithAuthorizationWithoutIngredientsTest() {
-        response = userClient.create(user);
+        response = userClient.createUser(user);
         Credentials credentials = new Credentials(user.getEmail(), user.getPassword());
         response = userClient.login(Credentials.from(user));
         String accessToken = response.extract().path("accessToken");
@@ -94,25 +97,24 @@ public class OrderCreateTest {
         int statusCode = response.extract().statusCode();
         response = userClient.deleteUser(StringUtils.substringAfter(accessToken, " "));
 
-        assertThat("Ingredient ids must be provided", statusCode, equalTo(400));
-
-
+        assertThat("Ingredient ids must be provided", statusCode, equalTo(SC_BAD_REQUEST));
     }
+
     @Test
     public void orderCreateWithoutAuthorizationWithoutIngredientsTest() {
-        response = userClient.create(user);
+        response = userClient.createUser(user);
         String accessToken = response.extract().path("accessToken");
         response = orderClient.createOrderWithoutAuthorization(order);
         int statusCode = response.extract().statusCode();
         response = userClient.deleteUser(StringUtils.substringAfter(accessToken, " "));
 
-        assertThat("Ingredient ids must be provided", statusCode, equalTo(400));
+        assertThat("Ingredient ids must be provided", statusCode, equalTo(SC_BAD_REQUEST));
     }
 
     @Test
     public void orderCreateByAuthorizationWithInvalidIngredientsTest() {
         createListInvalidIngredients();
-        response = userClient.create(user);
+        response = userClient.createUser(user);
         Credentials credentials = new Credentials(user.getEmail(), user.getPassword());
         response = userClient.login(Credentials.from(user));
         String accessToken = response.extract().path("accessToken");
@@ -120,39 +122,35 @@ public class OrderCreateTest {
         int statusCode = response.extract().statusCode();
         response = userClient.deleteUser(StringUtils.substringAfter(accessToken, " "));
 
-        assertThat("Code not equal", statusCode, equalTo(500));
-
+        assertThat("Code not equal", statusCode, equalTo(SC_INTERNAL_SERVER_ERROR));
     }
 
     @Test
     public void getOrderByAuthorizationTest() {
-        response = userClient.create(user);
+        response = userClient.createUser(user);
         Credentials credentials = new Credentials(user.getEmail(), user.getPassword());
         response = userClient.login(Credentials.from(user));
         String accessToken = response.extract().path("accessToken");
-        response= orderClient.getAllOrders();
-        response=orderClient.getOrdersByAuthorization(accessToken);
+        response = orderClient.getAllOrders();
+        response = orderClient.getOrdersByAuthorization(accessToken);
         int statusCode = response.extract().statusCode();
-        List <String> orders=response.extract().path("orders");
+        List<String> orders = response.extract().path("orders");
         response = userClient.deleteUser(StringUtils.substringAfter(accessToken, " "));
 
-        assertThat("Code not equal", statusCode, equalTo(200));
-
-
+        assertThat("Code not equal", statusCode, equalTo(SC_OK));
     }
+
     @Test
     public void getOrderWithoutAuthorizationTest() {
-        response = userClient.create(user);
+        response = userClient.createUser(user);
         String accessToken = response.extract().path("accessToken");
-        response= orderClient.getAllOrders();
-        response=orderClient.getOrdersWithoutAuthorization();
+        response = orderClient.getAllOrders();
+        response = orderClient.getOrdersWithoutAuthorization();
         int statusCode = response.extract().statusCode();
-        List <String> orders=response.extract().path("orders");
+        List<String> orders = response.extract().path("orders");
         response = userClient.deleteUser(StringUtils.substringAfter(accessToken, " "));
 
-        assertThat("Code not equal", statusCode, equalTo(401));
-
-
+        assertThat("Code not equal", statusCode, equalTo(SC_UNAUTHORIZED));
     }
 
 }

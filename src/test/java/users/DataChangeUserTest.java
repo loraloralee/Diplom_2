@@ -6,6 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+
+import static org.apache.http.HttpStatus.*;
+
 import user.Credentials;
 import user.User;
 import user.UserClient;
@@ -15,35 +18,38 @@ public class DataChangeUserTest {
 
 
     private static String accessToken;
-    private static String email;
-    private static String name;
-    private UserClient userClient=new UserClient();
-    private User user=new User();
-
-
+    private UserClient userClient = new UserClient();
+    private User user = new User();
 
 
     @Before
     public void setUp() {
         userClient = new UserClient();
-        user= UserGenerator.getDefault();
+        user = UserGenerator.getDefault();
+    }
 
+    @After
+    public void tearDown() {
+        accessToken = accessToken.split("Bearer ")[1];
+        ValidatableResponse response = userClient.deleteUser(accessToken);
+        int statusCode = response.extract().statusCode();
+        Assert.assertEquals("User not deleted", SC_ACCEPTED, statusCode);
     }
 
     @Test
     @DisplayName("Изменение данных пользователя: с авторизацией")
     public void updateUserDataWithAuth() {
-        ValidatableResponse responseCreate = userClient.create(user);
-        Credentials credentials  = new Credentials(user.getEmail(), user.getPassword());
+        ValidatableResponse responseCreate = userClient.createUser(user);
+        Credentials credentials = new Credentials(user.getEmail(), user.getPassword());
         ValidatableResponse responseLogin = userClient.login(credentials);
         accessToken = responseCreate.extract().path("accessToken");
-        String userUpdateEmail = "new"+user.getEmail() ;
+        String userUpdateEmail = "new" + user.getEmail();
         String userUpdateName = user.getName() + "new";
         user.setEmail(userUpdateEmail);
         user.setName(userUpdateName);
         ValidatableResponse responseUpdate = userClient.updateUserWithAuthorization(user, accessToken);
         int statusCode = responseUpdate.extract().statusCode();
-        Assert.assertEquals("User not updated", 200, statusCode);
+        Assert.assertEquals("User not updated", SC_OK, statusCode);
         String actualEmail = responseUpdate.extract().path("user.email");
         Assert.assertEquals("E-mail failed", userUpdateEmail, actualEmail);
         String actualName = responseUpdate.extract().path("user.name");
@@ -53,28 +59,21 @@ public class DataChangeUserTest {
     @Test
     @DisplayName("Изменение данных пользователя: без авторизации")
     public void updateUserDataWithoutAuth() {
-        ValidatableResponse responseCreate = userClient.create(user);
-        Credentials credentials  = new Credentials(user.getEmail(), user.getPassword());
+        ValidatableResponse responseCreate = userClient.createUser(user);
+        Credentials credentials = new Credentials(user.getEmail(), user.getPassword());
         ValidatableResponse responseLogin = userClient.login(credentials);
         accessToken = responseCreate.extract().path("accessToken");
-        String userUpdateEmail = "new2"+user.getEmail() ;
+        String userUpdateEmail = "new2" + user.getEmail();
         String userUpdateName = user.getName() + "new2";
         user.setEmail(userUpdateEmail);
         user.setName(userUpdateName);
         ValidatableResponse responseUpdate = userClient.updateUserWithoutAuthorization(user);
         int statusCode = responseUpdate.extract().statusCode();
-        Assert.assertEquals("You should be authorised", 401, statusCode);
+        Assert.assertEquals("You should be authorised", SC_UNAUTHORIZED, statusCode);
         String actualEmail = responseUpdate.extract().path("user.email");
         Assert.assertNotEquals("E-mail в ответе сервера не совпадает актуальным", userUpdateEmail, actualEmail);
         String actualName = responseUpdate.extract().path("user.name");
         Assert.assertNotEquals("E-mail в ответе сервера не совпадает актуальным", userUpdateName, actualName);
     }
-    @After
-    public void tearDown()
-    {
-        accessToken = accessToken.split("Bearer ")[1];
-        ValidatableResponse response = userClient.deleteUser(accessToken);
-        int statusCode = response.extract().statusCode();
-        Assert.assertEquals("User not deleted", 202, statusCode);
-    }
+
 }

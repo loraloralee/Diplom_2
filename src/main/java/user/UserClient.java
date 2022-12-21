@@ -4,13 +4,13 @@ import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
-public class UserClient extends Client{
+public class UserClient extends Client {
     private static final String USER_PATH = "/api/auth/register";
     private static final String LOGIN_PATH = "/api/auth/login";
-    private static final String CHANGE_PATH ="/api/auth/user";
+    private static final String CHANGE_PATH = "/api/auth/user";
     public static final String DELETE_PATH = "api/auth/user";
 
-    public ValidatableResponse create(User user){
+    public ValidatableResponse createUser(User user) {
         return given()
                 .spec(getSpec())
                 .log().all()
@@ -20,8 +20,7 @@ public class UserClient extends Client{
                 .log().all();
     }
 
-
-    public ValidatableResponse login(Credentials credentials){
+    public ValidatableResponse login(Credentials credentials) {
         return given()
                 .spec(getSpec())
                 .log().all()
@@ -31,25 +30,27 @@ public class UserClient extends Client{
                 .log().all();
     }
 
-    public ValidatableResponse updateUserWithAuthorization(User user, String accessToken){
+    public ValidatableResponse updateUserWithAuthorization(User user, String accessToken) {
         return given()
                 .spec(getSpec())
                 .log().all()
                 .header("Authorization", accessToken)
                 .body(user)
-                .patch (CHANGE_PATH)
+                .patch(CHANGE_PATH)
                 .then()
                 .log().all();
     }
-    public ValidatableResponse updateUserWithoutAuthorization(User user){
+
+    public ValidatableResponse updateUserWithoutAuthorization(User user) {
         return given()
                 .spec(getSpec())
                 .log().all()
                 .body(user)
-                .patch (CHANGE_PATH)
+                .patch(CHANGE_PATH)
                 .then()
                 .log().all();
     }
+
     public ValidatableResponse deleteUser(String accessToken) {
         return given()
                 .spec(getSpec())
@@ -58,6 +59,4 @@ public class UserClient extends Client{
                 .delete(DELETE_PATH)
                 .then();
     }
-
-
 }

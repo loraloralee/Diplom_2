@@ -9,13 +9,14 @@ public class Credentials {
         this.email = email;
         this.password = password;
     }
-    public static Credentials from(User user){
+
+    public static Credentials from(User user) {
         return new Credentials(user.getEmail(), user.getPassword());
     }
 
 
-    public static Credentials credentialsWithInvalidEmailPassword(User user){
-        return new Credentials("25"+user.getEmail(), user.getPassword() );
+    public static Credentials credentialsWithInvalidEmailPassword(User user) {
+        return new Credentials("25" + user.getEmail(), user.getPassword());
     }
 
 

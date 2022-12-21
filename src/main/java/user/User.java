@@ -5,7 +5,7 @@ public class User {
     private String password;
     private String name;
 
-    public User(){
+    public User() {
 
     }
 
@@ -14,9 +14,6 @@ public class User {
         this.password = password;
         this.name = name;
     }
-   // public static User createWithoutName(){
-       // return new User("ser@qq.ww","123","");
-   // }
 
     public String getEmail() {
         return email;
