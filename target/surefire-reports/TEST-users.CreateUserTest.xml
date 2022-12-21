@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="users.CreateUserTest" time="3.176" errors="0" skipped="0">
+<testsuite tests="3" failures="1" name="users.CreateUserTest" time="3.049" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.15+9-LTS"/>
@@ -65,7 +65,142 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="users.CreateUserTest" name="userCanBeCreatedTest" time="0.796"/>
-  <testcase classname="users.CreateUserTest" name="userWithDoubleUserTest" time="1.23"/>
-  <testcase classname="users.CreateUserTest" name="userWithEmptyFieldTest" time="1.15"/>
+  <testcase classname="users.CreateUserTest" name="userCanBeCreatedTest" time="0.771"/>
+  <testcase classname="users.CreateUserTest" name="userWithDoubleUserTest" time="1.117">
+    <failure message="User already exists expected:&lt;403&gt; but was:&lt;429&gt;" type="java.lang.AssertionError">java.lang.AssertionError: User already exists expected:&lt;403&gt; but was:&lt;429&gt;
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:834)
+	at org.junit.Assert.assertEquals(Assert.java:645)
+	at users.CreateUserTest.userWithDoubleUserTest(CreateUserTest.java:58)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</failure>
+    <system-out>Request method:	POST
+Request URI:	https://stellarburgers.nomoreparties.site/api/auth/register
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=*/*
+				Content-Type=application/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:
+{
+    &quot;email&quot;: &quot;dielem@mail.ru&quot;,
+    &quot;password&quot;: &quot;password_1&quot;,
+    &quot;name&quot;: &quot;name_1&quot;
+}
+HTTP/1.1 200 OK
+Date: Wed, 21 Dec 2022 18:42:09 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTM1MzgxYzE2MWRhMDAxYjdhMDg1ZCIsImlhdCI6MTY3MTY0ODEyOSwiZXhwIjoxNjcxNjQ5MzI5fQ.whdksHQeQUEaHdjsg89mUGRYjSia5aRjO6a8Hocfsig
+ETag: W/&quot;167-huDBg0jWPErTVamKn6AkksJCOQw&quot;
+CF-Cache-Status: DYNAMIC
+Report-To: {&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https:\/\/a.nel.cloudflare.com\/report\/v3?s=mLTKpHB4n8d8HYA7%2FsH%2FHfITCTHKxTVUJ6Vp0WY2xKCkAnRzuvWs%2FRIx1MZ6%2FENDRIISMwEjJ5gE8jWi8mf8ZT9tCgGd4FPjx0t0dNGi0TjMFpSdLh9HzfWHpG8sczpozwgwCTP7TDoHnURPI%2BExp0ghdIw%3D&quot;}],&quot;group&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}
+NEL: {&quot;success_fraction&quot;:0,&quot;report_to&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}
+Server: cloudflare
+CF-RAY: 77d2c1893bc1d926-HEL
+Content-Encoding: gzip
+alt-svc: h3=&quot;:443&quot;; ma=86400, h3-29=&quot;:443&quot;; ma=86400
+
+{
+    &quot;success&quot;: true,
+    &quot;user&quot;: {
+        &quot;email&quot;: &quot;dielem@mail.ru&quot;,
+        &quot;name&quot;: &quot;name_1&quot;
+    },
+    &quot;accessToken&quot;: &quot;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTM1MzgxYzE2MWRhMDAxYjdhMDg1ZCIsImlhdCI6MTY3MTY0ODEyOSwiZXhwIjoxNjcxNjQ5MzI5fQ.whdksHQeQUEaHdjsg89mUGRYjSia5aRjO6a8Hocfsig&quot;,
+    &quot;refreshToken&quot;: &quot;dda3d0f75e3981a9ce7bfc6f12bf2ae33ccbacdc32c7f68c35d549f436128dbaf66c553bbce9acc6&quot;
+}
+Request method:	POST
+Request URI:	https://stellarburgers.nomoreparties.site/api/auth/register
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=*/*
+				Content-Type=application/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:
+{
+    &quot;email&quot;: &quot;User_2@mail.ru&quot;,
+    &quot;password&quot;: &quot;Password_2&quot;,
+    &quot;name&quot;: &quot;Name_2&quot;
+}
+HTTP/1.1 429 Too Many Requests
+Date: Wed, 21 Dec 2022 18:42:09 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+CF-Cache-Status: DYNAMIC
+Report-To: {&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https:\/\/a.nel.cloudflare.com\/report\/v3?s=50hfTnHLUqN%2BDdjpnnEIxWjso8uptVwwqkxuwMTsiQsBeYgwa%2BhnAw%2BTJ44eo%2BCufSZi%2Fo5fBJGXN4WgfTY03tkWVkkl2cIJ%2FdlErbl094yi3dAPTn95W9QpPzqRtnT48s4kD%2BX6MgBd8sOC7i5U4q3RcY4%3D&quot;}],&quot;group&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}
+NEL: {&quot;success_fraction&quot;:0,&quot;report_to&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}
+Server: cloudflare
+CF-RAY: 77d2c18b9ab7fe30-HEL
+alt-svc: h3=&quot;:443&quot;; ma=86400, h3-29=&quot;:443&quot;; ma=86400
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;429 Too Many Requests&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;center&gt;
+      &lt;h1&gt;429 Too Many Requests&lt;/h1&gt;
+    &lt;/center&gt;
+    &lt;hr/&gt;
+    &lt;center&gt;nginx/1.18.0 (Ubuntu)&lt;/center&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+Request method:	DELETE
+Request URI:	https://stellarburgers.nomoreparties.site/api/auth/user
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=*/*
+				Content-Type=application/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:			&lt;none&gt;
+</system-out>
+  </testcase>
+  <testcase classname="users.CreateUserTest" name="userWithEmptyFieldTest" time="1.161"/>
 </testsuite>

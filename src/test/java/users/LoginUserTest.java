@@ -15,7 +15,10 @@ import user.UserClient;
 import user.UserGenerator;
 
 
-public class LoginUserTest {
+public class
+
+
+LoginUserTest {
     private UserClient userClient = new UserClient();
     private User user = new User();
     private String accessToken;

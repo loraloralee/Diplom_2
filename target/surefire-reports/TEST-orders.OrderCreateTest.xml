@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="orders.OrderCreateTest" time="40.408" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="orders.OrderCreateTest" time="21.09" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.15+9-LTS"/>
@@ -65,11 +65,11 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="orders.OrderCreateTest" name="orderCreateWithAuthorizationWithoutIngredientsTest" time="11.113"/>
-  <testcase classname="orders.OrderCreateTest" name="orderCreateByAuthorizationWithInvalidIngredientsTest" time="3.568"/>
-  <testcase classname="orders.OrderCreateTest" name="orderCreateWithoutAuthorizationWithoutIngredientsTest" time="1.201"/>
-  <testcase classname="orders.OrderCreateTest" name="orderCreateByAuthorizationWithIngredientsTest" time="2.864"/>
-  <testcase classname="orders.OrderCreateTest" name="getOrderWithoutAuthorizationTest" time="1.842"/>
-  <testcase classname="orders.OrderCreateTest" name="orderCreateWithoutAuthorizationWithIngredientsTest" time="1.962"/>
-  <testcase classname="orders.OrderCreateTest" name="getOrderByAuthorizationTest" time="17.858"/>
+  <testcase classname="orders.OrderCreateTest" name="orderCreateWithAuthorizationWithoutIngredientsTest" time="6.65"/>
+  <testcase classname="orders.OrderCreateTest" name="orderCreateByAuthorizationWithInvalidIngredientsTest" time="3.714"/>
+  <testcase classname="orders.OrderCreateTest" name="orderCreateWithoutAuthorizationWithoutIngredientsTest" time="1.309"/>
+  <testcase classname="orders.OrderCreateTest" name="orderCreateByAuthorizationWithIngredientsTest" time="3.437"/>
+  <testcase classname="orders.OrderCreateTest" name="getOrderWithoutAuthorizationTest" time="1.877"/>
+  <testcase classname="orders.OrderCreateTest" name="orderCreateWithoutAuthorizationWithIngredientsTest" time="1.72"/>
+  <testcase classname="orders.OrderCreateTest" name="getOrderByAuthorizationTest" time="2.383"/>
 </testsuite>
